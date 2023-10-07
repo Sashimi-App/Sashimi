@@ -1,5 +1,5 @@
-import "package:Sashimi/Feed/feed_page.dart";
-import "package:Sashimi/Login/login.dart";
+import 'package:Sashimi/screens/Feed/feed_page.dart';
+import 'package:Sashimi/screens/Login/login.dart';
 import "package:flutter/material.dart";
 
 class SignUp extends StatefulWidget {

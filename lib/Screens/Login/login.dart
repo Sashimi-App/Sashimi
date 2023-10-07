@@ -1,5 +1,5 @@
-import "package:Sashimi/Feed/feed_page.dart";
-import "package:Sashimi/Login/signup.dart";
+import 'package:Sashimi/screens/Feed/feed_page.dart';
+import 'package:Sashimi/screens/Login/signup.dart';
 import "package:flutter/material.dart";
 
 class Login extends StatefulWidget {
@@ -21,7 +21,9 @@ class _LoginState extends State<Login> {
               "Log In",
               style: TextStyle(fontWeight: FontWeight.w300, fontSize: 30),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: EdgeInsets.fromLTRB(20, 16, 20, 4),
               child: TextFormField(
@@ -45,8 +47,7 @@ class _LoginState extends State<Login> {
                   hintText: 'Password',
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                  }
+                  if (value == null || value.isEmpty) {}
                   return null;
                 },
               ),
@@ -54,18 +55,16 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
               child: InkWell(
-                  onTap: () => (
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignUp()),
-                  )
-                  ),
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                        decoration: TextDecoration.underline, color: Colors.blue),
-                  ),
+                onTap: () => (Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUp()),
+                )),
+                child: Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                      decoration: TextDecoration.underline, color: Colors.blue),
                 ),
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -80,14 +79,12 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () => (
-                  Navigator.push(
+                onTap: () => (Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const SignUp()),
-                )
-                ),
+                )),
                 child: Text(
-                  'Don''t Have an Account? Register',
+                  'Don' 't Have an Account? Register',
                   style: TextStyle(
                       decoration: TextDecoration.underline, color: Colors.blue),
                 ),
