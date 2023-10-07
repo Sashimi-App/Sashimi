@@ -1,4 +1,4 @@
-import 'package:Sashimi/Login/login.dart';
+import 'package:Sashimi/Screens/Login/login.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const SashimiApp());
