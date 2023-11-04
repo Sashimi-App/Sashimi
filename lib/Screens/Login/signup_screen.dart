@@ -17,6 +17,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _showErrorMessage(String errorMessage) {
+  String customMessage;
+
+  if (errorMessage.contains("The email address is badly formatted")) {
+    customMessage = "The email address is badly formatted. Please check your email.";
+  } else if (errorMessage.contains("weak-password")) {
+    customMessage = "The password is too weak. Please use a stronger password.";
+  } else if (errorMessage.contains("email-already-in-use")) {
+    customMessage = "The email address is already in use by another account. Please use a different email.";
+  } else {
+    customMessage = "Sign-up failed. Please try again later.";
+  }
+
+  final snackBar = SnackBar(
+    content: Text(customMessage),
+    duration: const Duration(seconds: 5), // You can adjust the duration as needed
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
   void _handleSignUpButtonPressed() async {
     _logger.d("Sign Up Button Pressed");
 
@@ -44,17 +66,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
     } catch (error) {
       _logger.e("Sign Up Error: ${error.toString()}");
-      _showErrorMessage("Sign Up Error: ${error.toString()}");
+      _showErrorMessage("Sign-in failed: ${error.toString()}");
     }
   }
 
-  void _showErrorMessage(String message) {
-    // Implement error message display here
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
