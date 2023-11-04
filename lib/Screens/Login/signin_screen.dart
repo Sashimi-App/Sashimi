@@ -19,25 +19,48 @@ class _SignInScreenState extends State<SignInScreen> {
   final Logger _logger = Logger();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _showErrorSnackBar(String errorMessage) {
+    String customMessage;
+
+    if (errorMessage.contains("INVALID_LOGIN_CREDENTIALS")) {
+      customMessage = "Wrong username or password. Please try again.";
+    } else if (errorMessage.contains("ERROR_USER_NOT_FOUND")) {
+      customMessage = "Username not found. Please check your username.";
+    } else if(errorMessage.contains("invalid-email")) {
+      customMessage = "Invalid email. Please check your email.";
+    } else {
+      customMessage = "Sign-in failed. Please try again later.";
+    }
+
+    final snackBar = SnackBar(
+      content: Text(customMessage),
+      duration: const Duration(seconds: 5), // You can adjust the duration as needed
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
 
   void _handleSignInButtonPressed() async {
-    try {
-      _logger.d("Sign In Button Pressed");
+  try {
+    _logger.d("Sign In Button Pressed");
 
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailTextController.text,
-        password: _passwordTextController.text,
-      );
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailTextController.text,
+      password: _passwordTextController.text,
+    );
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const FeedPage()),
-      );
-    } catch (error) {
-      _logger.e("Sign in Error: ${error.toString()}");
-      // Handle the error here (e.g., show an error message to the user)
-    }
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const FeedPage()),
+    );
+  } catch (error) {
+    _logger.e("Sign in Error: ${error.toString()}");
+    _showErrorSnackBar("Sign-in failed: ${error.toString()}");
   }
+}
 
   void _handleSignUpLinkTapped() {
     _logger.d("Sign Up link tapped");
@@ -45,10 +68,12 @@ class _SignInScreenState extends State<SignInScreen> {
       return const SignUpScreen();
     }));
   }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
