@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-
+//
 class TodoList extends StatefulWidget {
   const TodoList({super.key, required this.title});
 
@@ -47,7 +47,8 @@ class _MyHomePageState extends State<TodoList> {
           physics: const AlwaysScrollableScrollPhysics(),
           itemCount: todoList.length,
           itemBuilder: (context, index) {
-            todoList.sort((a, b) => (a.taskCompleted ? 1 : 0).compareTo(b.taskCompleted ? 1 : 0));
+            todoList.sort((a, b) =>
+                (a.taskCompleted ? 1 : 0).compareTo(b.taskCompleted ? 1 : 0));
             return Padding(
               padding: const EdgeInsets.all(5.0),
               child: Container(
@@ -87,43 +88,39 @@ class _MyHomePageState extends State<TodoList> {
               todoList[index].taskCompleted = !todoList[index].taskCompleted;
             });
           },
-          child: 
-            Container(
-              width: 10.0,
-              height: 10.0,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-            )
-      ),
-      Expanded (
-          child: 
-            Container(
-              padding: const EdgeInsets.only(left: 10),
-              child: TextField(
-                controller: TextEditingController.fromValue(TextEditingValue(
-                    text: todoList[index].title,
-                    selection: TextSelection.collapsed(
-                        offset: todoList[index].title.length))),
-                onChanged: (newTitle) {
-                  setState(() {
-                    todoList[index].title = newTitle;
-                  });
-                },
-                style: TextStyle(
-                  color: Colors.white,
-                  decoration: todoList[index].taskCompleted
-                      ? TextDecoration.lineThrough
-                      : null,
-                ),
-                textDirection: TextDirection.ltr,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
-              ),
-            )
-        )
+          child: Container(
+            width: 10.0,
+            height: 10.0,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+          )),
+      Expanded(
+          child: Container(
+        padding: const EdgeInsets.only(left: 10),
+        child: TextField(
+          controller: TextEditingController.fromValue(TextEditingValue(
+              text: todoList[index].title,
+              selection: TextSelection.collapsed(
+                  offset: todoList[index].title.length))),
+          onChanged: (newTitle) {
+            setState(() {
+              todoList[index].title = newTitle;
+            });
+          },
+          style: TextStyle(
+            color: Colors.white,
+            decoration: todoList[index].taskCompleted
+                ? TextDecoration.lineThrough
+                : null,
+          ),
+          textDirection: TextDirection.ltr,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+          ),
+        ),
+      ))
     ];
   }
 }
