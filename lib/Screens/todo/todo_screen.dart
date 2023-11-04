@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 
 
-class TodoList extends StatefulWidget {
-  const TodoList({super.key, required this.title});
+class TodoScreen extends StatefulWidget {
+  const TodoScreen({super.key});
 
-  final String title;
+
 
   @override
-  State<TodoList> createState() => _MyHomePageState();
+  State<TodoScreen> createState() => _MyTodoScreenState();
 }
 
 class Task {
   String title;
   bool taskCompleted;
+  String taskID;
   Task({
     required this.title,
     required this.taskCompleted,
+    required this.taskID,
   });
 }
 
-class _MyHomePageState extends State<TodoList> {
+class _MyTodoScreenState extends State<TodoScreen> {
   List<Task> todoList = [];
   List<Task> completed = [];
 
@@ -28,9 +30,16 @@ class _MyHomePageState extends State<TodoList> {
       Task tempTask = Task(
         title: "",
         taskCompleted: false,
+        taskID: (DateTime.now().millisecondsSinceEpoch).toString(),
       );
 
       todoList.add(tempTask);
+    });
+  }
+
+  void _deleteTask(String taskID) {
+    setState(() {
+      todoList.removeWhere((item) => item.taskID == taskID);
     });
   }
 
@@ -61,7 +70,7 @@ class _MyHomePageState extends State<TodoList> {
                   ),
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
-                    children: completeTask(index),
+                    children: TaskBox(todoList[index].taskID),
                   )),
             );
           },
@@ -79,12 +88,14 @@ class _MyHomePageState extends State<TodoList> {
     );
   }
 
-  List<Widget> completeTask(int index) {
+  List<Widget> TaskBox(String taskID) {
+    int tempInd = todoList.indexWhere((item)=>item.taskID == taskID);
     return [
       InkWell(
           onTap: () {
             setState(() {
-              todoList[index].taskCompleted = !todoList[index].taskCompleted;
+              todoList[tempInd].taskCompleted = 
+              !todoList[tempInd].taskCompleted;
             });
           },
           child: 
@@ -103,17 +114,17 @@ class _MyHomePageState extends State<TodoList> {
               padding: const EdgeInsets.only(left: 10),
               child: TextField(
                 controller: TextEditingController.fromValue(TextEditingValue(
-                    text: todoList[index].title,
+                    text: todoList[tempInd].title,
                     selection: TextSelection.collapsed(
-                        offset: todoList[index].title.length))),
+                        offset: todoList[tempInd].title.length))),
                 onChanged: (newTitle) {
                   setState(() {
-                    todoList[index].title = newTitle;
+                    todoList[tempInd].title = newTitle;
                   });
                 },
                 style: TextStyle(
                   color: Colors.white,
-                  decoration: todoList[index].taskCompleted
+                  decoration: todoList[tempInd].taskCompleted
                       ? TextDecoration.lineThrough
                       : null,
                 ),
@@ -123,7 +134,24 @@ class _MyHomePageState extends State<TodoList> {
                 ),
               ),
             )
-        )
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              todoList.removeWhere((item)=>item.taskID== taskID);
+              print(todoList.length);
+            });
+          },
+          child: 
+            Container(
+              width: 10.0,
+              height: 10.0,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.red,
+              ),
+            )
+        ),
     ];
   }
 }
