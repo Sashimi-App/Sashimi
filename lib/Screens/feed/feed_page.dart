@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
 
@@ -26,14 +25,14 @@ class _FeedPageState extends State<FeedPage> {
         elevation: 0,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(Icons.search_outlined, color: Colors.black, size: 50),
+          icon: const Icon(Icons.search_outlined, color: Colors.black, size: 50),
           onPressed: () {
             print("search button pressed!");
           },
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.person_add, color: Colors.black, size: 50),
+            icon: const Icon(Icons.person_add, color: Colors.black, size: 50),
             onPressed: () {
               print("search button pressed!");
             },
@@ -122,21 +121,21 @@ class FeedContent extends StatelessWidget {
                       children: [
                         Row(children: [
                           IconButton(
-                              icon: Icon(Icons.account_box_rounded),
+                              icon: const Icon(Icons.account_box_rounded),
                               onPressed: () {
                                 print("account button pressed!");
                               }),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Text(
                             acc_Name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18, // Change the font size as needed
                             ),
                           ),
                         ]),
-                        SizedBox(width: 115),
+                        const SizedBox(width: 115),
                         IconButton(
-                            icon: Icon(Icons.more_horiz, size: 30),
+                            icon: const Icon(Icons.more_horiz, size: 30),
                             onPressed: () {
                               print("more info button pressed!");
                             }),
@@ -163,12 +162,12 @@ class FeedContent extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
-                                    icon: Icon(Icons.favorite_border),
+                                    icon: const Icon(Icons.favorite_border),
                                     onPressed: () {
                                       print("like button pressed!");
                                     }),
                                 IconButton(
-                                    icon: Icon(Icons.emoji_emotions_outlined),
+                                    icon: const Icon(Icons.emoji_emotions_outlined),
                                     onPressed: () {
                                       print("react button pressed!");
                                     }),
