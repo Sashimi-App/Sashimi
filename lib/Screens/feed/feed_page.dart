@@ -34,7 +34,7 @@ class _FeedPageState extends State<FeedPage> {
           IconButton(
             icon: const Icon(Icons.person_add, color: Colors.black, size: 50),
             onPressed: () {
-              print("search button pressed!");
+              print("Add button pressed!");
             },
           ),
         ],
