@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
-//
-class TodoList extends StatefulWidget {
-  const TodoList({super.key, required this.title});
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<TodoList> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class Task {
@@ -19,14 +40,66 @@ class Task {
   });
 }
 
-class _MyHomePageState extends State<TodoList> {
+class _MyHomePageState extends State<MyHomePage> {
+  late TextEditingController controller;
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = TextEditingController();
+    focusNode = FocusNode();
+    focusNode.requestFocus();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
   List<Task> todoList = [];
   List<Task> completed = [];
+  String taskName = '';
+
+  Future<String?> openDialog() => showDialog(
+        barrierColor: Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: Colors.black,
+          insetPadding: EdgeInsets.all(25),
+          content: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 0.05,
+              child: TextFormField(
+                enableSuggestions: false,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    hintText: 'Name your task',
+                    hintStyle: TextStyle(color: Colors.white)),
+                controller: controller,
+                focusNode: focusNode,
+                autofocus: true,
+                onEditingComplete: () => submit(),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  void submit() {
+    Navigator.of(context).pop(controller.text);
+    controller.clear();
+  }
 
   void _addTask() {
     setState(() {
       Task tempTask = Task(
-        title: "",
+        title: taskName,
         taskCompleted: false,
       );
 
@@ -68,15 +141,20 @@ class _MyHomePageState extends State<TodoList> {
           },
         ),
       )),
-      floatingActionButton: addTaskButton(),
-    );
-  }
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final taskName = await openDialog();
 
-  FloatingActionButton addTaskButton() {
-    return FloatingActionButton(
-      onPressed: _addTask,
-      tooltip: 'Increment',
-      child: const Icon(Icons.add),
+          if (taskName == null || taskName.isEmpty) return;
+
+          setState(() {
+            this.taskName = taskName;
+          });
+          _addTask();
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
