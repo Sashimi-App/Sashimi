@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddFriendPage extends StatelessWidget {
   const AddFriendPage({super.key});
@@ -194,20 +195,7 @@ class _FeedPageState extends State<FeedPage> {
         ],
       ),
       body: <Widget>[
-        Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            alignment: Alignment.center,
-            child: ListView.builder(
-                itemCount: 5,
-                prototypeItem: const FeedContent(
-                    acc_Name: "dksung",
-                    uploadImage: 'assets/images/sashimigym.png'),
-                itemBuilder: (context, index) {
-                  return FeedContent(
-                      acc_Name: accounts[index], uploadImage: accUpload[index]);
-                })),
+        buildFeed(context),
         Container(
           color: Colors.white,
           alignment: Alignment.center,
@@ -221,6 +209,61 @@ class _FeedPageState extends State<FeedPage> {
       ][currentPageIndex],
     );
   }
+}
+
+Widget buildFeed(BuildContext context) {
+  return StreamBuilder<QuerySnapshot>(
+    stream: FirebaseFirestore.instance.collection('user').snapshots(),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) return LinearProgressIndicator();
+
+      return _buildList(context, snapshot.data?.docs ?? []);
+    },
+  );
+}
+
+Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  return ListView(
+    padding: const EdgeInsets.only(top: 20.0),
+    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+  );
+}
+
+Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+  final user = User.fromSnapshot(data);
+
+  return Padding(
+    key: ValueKey(user.name),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+    child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: FeedContent(
+          acc_Name: user.name,
+          uploadImage: user.imgAddress,
+        )),
+  );
+}
+
+class User {
+  final String name;
+  final String imgAddress;
+  final DocumentReference? reference;
+
+  User.fromMap(Map<String, dynamic> map, {this.reference})
+      : assert(map['name'] != null),
+        assert(map['imgAddress'] != null),
+        name = map['name'],
+        imgAddress = map['imgAddress'];
+
+  User.fromSnapshot(DocumentSnapshot snapshot)
+      : this.fromMap(snapshot.data as Map<String, dynamic>? ?? {},
+            reference: snapshot.reference);
+
+  @override
+  String toString() => "User<$name:$imgAddress>";
 }
 
 class FeedContent extends StatelessWidget {
