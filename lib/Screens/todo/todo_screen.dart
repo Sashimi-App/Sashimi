@@ -1,46 +1,27 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:swipeable_tile/swipeable_tile.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class TodoListScreen extends StatefulWidget {
+  const TodoListScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<TodoListScreen> createState() => _MyTodoScreenListState();
 }
 
 class Task {
   String title;
   bool taskCompleted;
+  String taskID;
+
   Task({
     required this.title,
     required this.taskCompleted,
+    required this.taskID,
   });
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyTodoScreenListState extends State<TodoListScreen> {
   late TextEditingController controller;
   late FocusNode focusNode;
 
@@ -65,11 +46,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String taskName = '';
 
   Future<String?> openDialog() => showDialog(
-        barrierColor: Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
+        barrierColor: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: Colors.black,
-          insetPadding: EdgeInsets.all(25),
+          insetPadding: const EdgeInsets.all(25),
           content: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
             child: Container(
@@ -77,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
               height: MediaQuery.of(context).size.height * 0.05,
               child: TextFormField(
                 enableSuggestions: false,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                     hintText: 'Name your task',
                     hintStyle: TextStyle(color: Colors.white)),
                 controller: controller,
@@ -101,9 +82,16 @@ class _MyHomePageState extends State<MyHomePage> {
       Task tempTask = Task(
         title: taskName,
         taskCompleted: false,
+        taskID: (DateTime.now().millisecondsSinceEpoch).toString(),
       );
 
       todoList.add(tempTask);
+    });
+  }
+
+  void _deleteTask(String taskID) {
+    setState(() {
+      todoList.removeWhere((item) => item.taskID == taskID);
     });
   }
 
@@ -116,28 +104,94 @@ class _MyHomePageState extends State<MyHomePage> {
         height:
             MediaQuery.of(context).size.height * 0.8, // 80% of screen height
         padding: const EdgeInsets.all(0.0),
-        child: ListView.builder(
+
+        child: ReorderableListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
+
+          proxyDecorator: (child, index, animation) => Material(
+            shape: CircleBorder(eccentricity: 1),
+            child: child,
+          ),
+          // Material(
+          //   child:child
+          // ),
+
+          onReorder: (int oldIndex, int newIndex) {
+            setState(() {
+              if (oldIndex < newIndex) {
+                newIndex -= 1;
+              }
+              final Task item = todoList.removeAt(oldIndex);
+              todoList.insert(newIndex, item);
+            });
+          },
           itemCount: todoList.length,
           itemBuilder: (context, index) {
             todoList.sort((a, b) =>
                 (a.taskCompleted ? 1 : 0).compareTo(b.taskCompleted ? 1 : 0));
-            return Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: (todoList[index].taskCompleted
-                        ? const Color.fromARGB(255, 123, 114, 114)
-                        : const Color.fromARGB(
-                            255, 0, 0, 0)), // color of the task
-                    borderRadius:
-                        BorderRadius.circular(20.0), //how round the task is
-                  ),
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: completeTask(index),
-                  )),
-            );
+            String currTaskID = todoList[index].taskID;
+            return SwipeableTile.swipeToTriggerCard(
+                color: (todoList
+                        .firstWhere((item) => item.taskID == currTaskID)
+                        .taskCompleted
+                    ? const Color.fromARGB(255, 123, 114, 114)
+                    : const Color.fromARGB(255, 0, 0, 0)),
+                shadow: BoxShadow(
+                  color: Colors.black.withOpacity(0),
+                  blurRadius: 0,
+                  offset: Offset(0, 0),
+                ),
+                horizontalPadding: 2,
+                swipeThreshold: 0.425,
+                verticalPadding: 4,
+                key: Key(currTaskID),
+                direction: SwipeDirection.horizontal,
+                backgroundBuilder: (context, direction, progress) {
+                  if (direction == SwipeDirection.endToStart) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red, // color of the task
+                        borderRadius:
+                            BorderRadius.circular(20.0), //how round the task is
+                      ),
+                      padding: const EdgeInsets.all(16.0),
+                    );
+                  } else {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(
+                            255, 118, 105, 104), // color of the task
+                        borderRadius:
+                            BorderRadius.circular(20.0), //how round the task is
+                      ),
+                      padding: const EdgeInsets.all(16.0),
+                    );
+                  }
+                },
+                onSwiped: (direction) {
+                  if (direction == SwipeDirection.endToStart) {
+                    _deleteTask(currTaskID);
+                  } else if (direction == SwipeDirection.startToEnd) {
+                    //photo endpoint
+                    _deleteTask(currTaskID);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: (todoList[index].taskCompleted
+                            ? const Color.fromARGB(255, 123, 114, 114)
+                            : const Color.fromARGB(
+                                255, 0, 0, 0)), // color of the task
+                        borderRadius:
+                            BorderRadius.circular(20.0), //how round the task is
+                      ),
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: TaskBox(todoList[index].taskID),
+                      )),
+                ));
           },
         ),
       )),
@@ -158,12 +212,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  List<Widget> completeTask(int index) {
+  List<Widget> TaskBox(String taskID) {
+    int tempInd = todoList.indexWhere((item) => item.taskID == taskID);
     return [
       InkWell(
           onTap: () {
             setState(() {
-              todoList[index].taskCompleted = !todoList[index].taskCompleted;
+              todoList[tempInd].taskCompleted =
+                  !todoList[tempInd].taskCompleted;
             });
           },
           child: Container(
@@ -179,17 +235,17 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.only(left: 10),
         child: TextField(
           controller: TextEditingController.fromValue(TextEditingValue(
-              text: todoList[index].title,
+              text: todoList[tempInd].title,
               selection: TextSelection.collapsed(
-                  offset: todoList[index].title.length))),
+                  offset: todoList[tempInd].title.length))),
           onChanged: (newTitle) {
             setState(() {
-              todoList[index].title = newTitle;
+              todoList[tempInd].title = newTitle;
             });
           },
           style: TextStyle(
             color: Colors.white,
-            decoration: todoList[index].taskCompleted
+            decoration: todoList[tempInd].taskCompleted
                 ? TextDecoration.lineThrough
                 : null,
           ),
