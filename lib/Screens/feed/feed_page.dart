@@ -7,7 +7,6 @@ class AddFriendPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -140,6 +139,7 @@ class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -213,53 +213,53 @@ class _FeedPageState extends State<FeedPage> {
 
 Widget buildFeed(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection('user').snapshots(),
+    stream: FirebaseFirestore.instance.collection('users').snapshots(),
     builder: (context, snapshot) {
-      if (!snapshot.hasData) return LinearProgressIndicator();
+      if (!snapshot.hasData) {
+        return LinearProgressIndicator();
+      }
 
-      return _buildList(context, snapshot.data?.docs ?? []);
+      // Unwrap the nullable type
+      final documents = snapshot.data!.docs;
+
+      print(documents.map((doc) => doc.data()));
+      return _buildList(context, documents);
     },
   );
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
   return ListView(
-    padding: const EdgeInsets.only(top: 20.0),
+    padding: const EdgeInsets.only(top: 10.0),
     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
   );
 }
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final user = User.fromSnapshot(data);
-
   return Padding(
     key: ValueKey(user.name),
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: FeedContent(
-          acc_Name: user.name,
-          uploadImage: user.imgAddress,
-        )),
+    padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
+    child: FeedContent(
+      acc_Name: user.name,
+      uploadImage: user.imgAddress,
+    ),
   );
 }
 
 class User {
   final String name;
   final String imgAddress;
-  final DocumentReference? reference;
+  final DocumentReference reference;
 
-  User.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
+  User.fromMap(Map<String, dynamic> map, {required this.reference})
+      : assert(map['first_name'] != null),
         assert(map['imgAddress'] != null),
-        name = map['name'],
+        name = '${map['first_name']} ${map['last_name']}',
         imgAddress = map['imgAddress'];
 
   User.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data as Map<String, dynamic>? ?? {},
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
             reference: snapshot.reference);
 
   @override
@@ -305,7 +305,6 @@ class FeedContent extends StatelessWidget {
                             ),
                           ),
                         ]),
-                        SizedBox(width: 115),
                         IconButton(
                             icon: Icon(Icons.more_horiz, size: 30),
                             onPressed: () {
@@ -324,7 +323,7 @@ class FeedContent extends StatelessWidget {
                           Container(
                             foregroundDecoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage(uploadImage),
+                                    image: NetworkImage(uploadImage),
                                     fit: BoxFit.fill),
                                 borderRadius: BorderRadius.circular(20.0)),
                           ),
