@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:swipeable_tile/swipeable_tile.dart';
-import 'package:Sashimi/Screens/photo_screen.dart';
+import 'package:Sashimi/Screens/ToDoList/photo_screen.dart';
 import 'package:camera/camera.dart';
-import 'package:Sashimi/Screens/photo_nocam.dart';
+import 'package:Sashimi/Screens/ToDoList/photo_nocam.dart';
 
 
 class TodoListScreen extends StatefulWidget {

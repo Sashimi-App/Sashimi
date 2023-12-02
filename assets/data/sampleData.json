@@ -1,0 +1,48 @@
+{
+    "posts": [
+        {
+            "title": "First Post!",
+            "image": "https://static.wikia.nocookie.net/disney/images/0/09/Ross_Lynch.jpg/revision/latest?cb=20190731163722",
+            "likes": 42,
+            "comments": [
+                {
+                    "commentID": 1,
+                    "text": "This is awesome"
+                }
+            ]
+        },
+        {
+            "title": "Post #2!",
+            "image": "https://lastfm.freetls.fastly.net/i/u/ar0/f8a7f7fbf3aa3a216b8593ef5bc376e8.jpg",
+            "likes": 55,
+            "comments": [
+                {
+                    "commentID": 2,
+                    "text": "This is awesome"
+                }
+            ]
+        },
+        {
+            "title": "Third post...",
+            "image": "https://pbs.twimg.com/profile_images/1584653441183485958/IgCyIY7C_400x400.jpg",
+            "likes": 4,
+            "comments": [
+                {
+                    "commentID": 3,
+                    "text": "This is awesome"
+                }
+            ]
+        },
+        {
+            "title": "4th Post?",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_GUTw-CFR0u0M_WLmaHylxJvbCOAUBBIXpw&usqp=CAU",
+            "likes": 0,
+            "comments": [
+                {
+                    "commentID": 4,
+                    "text": "This is awesome"
+                }
+            ]
+        }
+    ]
+}

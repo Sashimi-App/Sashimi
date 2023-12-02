@@ -1,3 +1,4 @@
+import 'package:Sashimi/Screens/Account/account_page.dart';
 import 'package:Sashimi/Screens/Login/signup_screen.dart';
 import 'package:Sashimi/screens/Feed/feed_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,7 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const FeedPage()),
+      MaterialPageRoute(builder: (context) => FeedPage()),
     );
   } catch (error) {
     _logger.e("Sign in Error: ${error.toString()}");
