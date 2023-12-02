@@ -38,6 +38,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_database: ^10.3.3
   cloud_firestore: ^4.13.0
+  path_provider: ^2.1.1
+  camera: ^0.10.5+5
+  swipeable_tile: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
