@@ -16,10 +16,6 @@ class PostList extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               print("Post ${index} was clicked");
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Settings()),
-              // );
             },
             child: Card(
                 shadowColor: Colors.black,

@@ -169,44 +169,6 @@ class _FeedPageState extends State<FeedPage> {
           ),
         ]),
       ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Colors.amber[800],
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home),
-            label: 'Feed',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.list),
-            label: 'Todos',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.school),
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
-      ),
-      body: <Widget>[
-        buildFeed(context),
-        Container(
-          color: Colors.white,
-          alignment: Alignment.center,
-          child: const Text('Todo Page'),
-        ),
-        Container(
-          color: Colors.white,
-          alignment: Alignment.center,
-          child: const Text('Account Page'),
-        ),
-      ][currentPageIndex],
     );
   }
 }
