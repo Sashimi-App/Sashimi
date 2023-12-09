@@ -3,6 +3,7 @@ import 'package:Sashimi/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:Sashimi/Screens/ToDoList/todolist_screen.dart';
 
 FirebaseDatabase db = FirebaseDatabase.instance;
 
@@ -20,6 +21,13 @@ class SashimiApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: SignInScreen());
+    // return const MaterialApp(home: SignInScreen());
+    return MaterialApp(
+          title: 'Catalist',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const SignInScreen());
   }
 }
