@@ -12,12 +12,12 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   int _selectedIndex = 0;
 
   // List of Widgets to display in the body according to selected tab
-  final List<Widget> _widgetOptions = [
-    FeedPage(),
-    TodoListScreen(),
-    AccountPage(),
-    // Other pages can be added here
-  ];
+  final List<Widget Function()> _widgetOptions = [
+  () => FeedPage(),
+  () => TodoListScreen(),
+  () => AccountPage(),
+];
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -28,7 +28,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: _widgetOptions.elementAt(_selectedIndex)(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
