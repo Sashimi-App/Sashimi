@@ -14,7 +14,7 @@ class AddFriendPage extends StatelessWidget {
           titleSpacing: 5,
           automaticallyImplyLeading: false,
           leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_new_outlined,
                 color: Colors.black,
               ),
@@ -37,15 +37,15 @@ class AddFriendPage extends StatelessWidget {
                           border: Border.all(color: Colors.black, width: 1.3)),
                       child: Container(
                           alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Text("Add or search friends"),
                           ))),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("ADD YOUR CONTACTS")),
+                    child: const Text("ADD YOUR CONTACTS")),
                 Container(
                     height: MediaQuery.of(context).size.height * 0.7,
                     width: MediaQuery.of(context).size.width * 0.9,
@@ -54,7 +54,7 @@ class AddFriendPage extends StatelessWidget {
                         itemCount: 5,
                         prototypeItem: const AddFriendComp(),
                         itemBuilder: (context, index) {
-                          return AddFriendComp();
+                          return const AddFriendComp();
                         })),
               ],
             ),
@@ -74,7 +74,7 @@ class AddFriendComp extends StatelessWidget {
         Row(
           children: [
             Container(
-              foregroundDecoration: BoxDecoration(
+              foregroundDecoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
                     image: AssetImage('assets/images/sashimigym.png'),
@@ -86,8 +86,8 @@ class AddFriendComp extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.1,
               height: MediaQuery.of(context).size.width * 0.1,
             ),
-            SizedBox(width: 7),
-            Column(
+            const SizedBox(width: 7),
+            const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [Text("Steven"), Text("steve123")],
@@ -98,7 +98,7 @@ class AddFriendComp extends StatelessWidget {
           children: [
             IconButton(
               iconSize: 25,
-              icon: Icon(Icons.person_add_alt),
+              icon: const Icon(Icons.person_add_alt),
               onPressed: () {
                 print("add button pressed");
               },
@@ -106,7 +106,7 @@ class AddFriendComp extends StatelessWidget {
             ),
             IconButton(
               iconSize: 25,
-              icon: Icon(Icons.close),
+              icon: const Icon(Icons.close),
               onPressed: () {
                 print("close button pressed");
               },
@@ -142,15 +142,15 @@ class _FeedPageState extends State<FeedPage> {
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(
-            icon: Icon(Icons.search_outlined, color: Colors.black, size: 35),
+            icon: const Icon(Icons.search_outlined, color: Colors.black, size: 35),
             onPressed: () {
               print("search button pressed!");
             },
             splashRadius: 25,
           ),
-          Spacer(),
+          const Spacer(),
           IconButton(
-            icon: Icon(Icons.person_add_alt_1_sharp,
+            icon: const Icon(Icons.person_add_alt_1_sharp,
                 color: Colors.black, size: 35),
             onPressed: () {
               Navigator.push(
@@ -210,7 +210,7 @@ Widget buildFeed(BuildContext context) {
     stream: FirebaseFirestore.instance.collection('users').snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {
-        return LinearProgressIndicator();
+        return const LinearProgressIndicator();
       }
       // Unwrap the nullable type
       final documents = snapshot.data!.docs;
@@ -304,20 +304,20 @@ class FeedContent extends StatelessWidget {
                       children: [
                         Row(children: [
                           IconButton(
-                              icon: Icon(Icons.account_box_rounded),
+                              icon: const Icon(Icons.account_box_rounded),
                               onPressed: () {
                                 print("account button pressed!");
                               }),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Text(
                             acc_Name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18, // Change the font size as needed
                             ),
                           ),
                         ]),
                         IconButton(
-                            icon: Icon(Icons.more_horiz, size: 30),
+                            icon: const Icon(Icons.more_horiz, size: 30),
                             onPressed: () {
                               print("more info button pressed!");
                             }),
@@ -344,12 +344,12 @@ class FeedContent extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
-                                    icon: Icon(Icons.favorite_border),
+                                    icon: const Icon(Icons.favorite_border),
                                     onPressed: () {
                                       print("like button pressed!");
                                     }),
                                 IconButton(
-                                    icon: Icon(Icons.emoji_emotions_outlined),
+                                    icon: const Icon(Icons.emoji_emotions_outlined),
                                     onPressed: () {
                                       print("react button pressed!");
                                     }),

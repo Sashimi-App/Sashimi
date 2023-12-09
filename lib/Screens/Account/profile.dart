@@ -27,11 +27,11 @@ class ProfileSection extends StatelessWidget {
 
 Widget profileBio(String personalBiography) {
   return Padding(
-    padding: EdgeInsets.all(10.0),
+    padding: const EdgeInsets.all(10.0),
     child: Text(
       personalBiography,
       textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 16),
+      style: const TextStyle(fontSize: 16),
     ),
   );
 }
@@ -42,18 +42,18 @@ Widget editButton(BuildContext context) {
     padding: const EdgeInsets.all(3.0),
     child: ElevatedButton.icon(
       onPressed: null,
-      label: Text(
+      label: const Text(
         'Edit profile',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 12),
       ),
       style: ElevatedButton.styleFrom(
-          fixedSize: Size(130, 30),
+          fixedSize: const Size(130, 30),
           backgroundColor: Colors.black,
           elevation: 10,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-      icon: Icon(
+      icon: const Icon(
         Icons.create_rounded,
         color: Colors.black,
         size: 25.0,
@@ -64,11 +64,11 @@ Widget editButton(BuildContext context) {
 
 Widget pronoun(String pronouns) {
   return Padding(
-    padding: EdgeInsets.all(1.0),
+    padding: const EdgeInsets.all(1.0),
     child: Text(
       pronouns,
       textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 15),
+      style: const TextStyle(fontSize: 15),
     ),
   );
 }
@@ -79,7 +79,7 @@ Widget username(String username) {
     child: Text(
       username,
       textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 15),
+      style: const TextStyle(fontSize: 15),
     ),
   );
 }
@@ -97,7 +97,7 @@ Widget profileName(String name) {
     child: Text(
       name,
       textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
     ),
   );
 }
@@ -108,12 +108,12 @@ Widget topIcons(BuildContext context) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Icon(
+        const Icon(
           Icons.upload,
           color: Colors.black,
           size: 33.0,
         ),
-        Spacer(),
+        const Spacer(),
         GestureDetector(
           onTap: () {
             print("Settings was clicked");
@@ -124,7 +124,7 @@ Widget topIcons(BuildContext context) {
             //   MaterialPageRoute(builder: (context) => Settings()),
             // );
           },
-          child: Icon(
+          child: const Icon(
             Icons.settings,
             color: Colors.black,
             size: 33.0,
@@ -143,51 +143,51 @@ class Settings extends StatelessWidget {
     return Container(
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        Text(
+        const Text(
           "How to use Catalist",
           textAlign: TextAlign.start,
           style: TextStyle(fontSize: 16),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: ElevatedButton.icon(
               onPressed: null,
-              icon: Icon(Icons.format_color_fill,
+              icon: const Icon(Icons.format_color_fill,
                   color: Colors.black, size: 25.0),
-              label: Text(
+              label: const Text(
                 "Tutorial",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 12),
               )),
         ),
-        Text(
+        const Text(
           "Customize",
           textAlign: TextAlign.start,
           style: TextStyle(fontSize: 16),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: ElevatedButton.icon(
               onPressed: null,
-              icon: Icon(Icons.format_color_fill,
+              icon: const Icon(Icons.format_color_fill,
                   color: Colors.black, size: 25.0),
-              label: Text(
+              label: const Text(
                 "Theme",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 12),
               )),
         ),
-        Text(
+        const Text(
           "Login",
           textAlign: TextAlign.start,
           style: TextStyle(fontSize: 16),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: ElevatedButton.icon(
               onPressed: null,
-              icon: Icon(Icons.logout, color: Colors.black, size: 25.0),
-              label: Text(
+              icon: const Icon(Icons.logout, color: Colors.black, size: 25.0),
+              label: const Text(
                 "Log Out",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 12),
