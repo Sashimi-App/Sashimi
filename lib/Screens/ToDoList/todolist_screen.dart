@@ -115,7 +115,9 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
         width: MediaQuery.of(context).size.width * 0.90, //90% screen width
         height:
             MediaQuery.of(context).size.height * 0.8, // 80% of screen height
-        padding: const EdgeInsets.all(0.0),
+        // padding: const EdgeInsets.all(0.0),
+        padding: const EdgeInsets.only(top:20.0, bottom: 0.0),
+
 
         child: ReorderableListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),

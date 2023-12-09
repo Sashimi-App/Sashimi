@@ -11,7 +11,7 @@ class PostList extends StatelessWidget {
     return GridView.count(
         crossAxisCount: 3,
         shrinkWrap: true,
-        padding: EdgeInsets.only(left: 15, right: 15),
+        padding: const EdgeInsets.only(left: 15, right: 15),
         children: List.generate(postData.length, (index) {
           return GestureDetector(
             onTap: () {
@@ -33,7 +33,7 @@ class PostList extends StatelessWidget {
                   ),
                   Text(
                     postData[index]["title"],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,

@@ -1,9 +1,127 @@
-import 'package:Sashimi/Screens/feed/add_friend.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Sashimi/screens/Login/signin_screen.dart';
+
+class AddFriendPage extends StatelessWidget {
+  const AddFriendPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          titleSpacing: 5,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios_new_outlined,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+        body: Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              children: [
+                Center(
+                  child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          border: Border.all(color: Colors.black, width: 1.3)),
+                      child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("Add or search friends"),
+                          ))),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: const Text("ADD YOUR CONTACTS")),
+                Container(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    alignment: Alignment.center,
+                    child: ListView.builder(
+                        itemCount: 5,
+                        prototypeItem: const AddFriendComp(),
+                        itemBuilder: (context, index) {
+                          return const AddFriendComp();
+                        })),
+              ],
+            ),
+          ),
+        ));
+  }
+}
+
+class AddFriendComp extends StatelessWidget {
+  const AddFriendComp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Container(
+              foregroundDecoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image: AssetImage('assets/images/sashimigym.png'),
+                    fit: BoxFit.cover),
+              ),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.blueGrey, width: 0.1)),
+              width: MediaQuery.of(context).size.width * 0.1,
+              height: MediaQuery.of(context).size.width * 0.1,
+            ),
+            const SizedBox(width: 7),
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text("Steven"), Text("steve123")],
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            IconButton(
+              iconSize: 25,
+              icon: const Icon(Icons.person_add_alt),
+              onPressed: () {
+                print("add button pressed");
+              },
+              splashRadius: 20,
+            ),
+            IconButton(
+              iconSize: 25,
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                print("close button pressed");
+              },
+              splashRadius: 20,
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
 
 class FeedPage extends StatefulWidget {
-  const FeedPage({super.key});
+  // final TextEditingController emailController;
+  const FeedPage({Key? key});
 
   @override
   State<FeedPage> createState() => _FeedPageState();
@@ -11,18 +129,11 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
   int currentPageIndex = 0;
-  final List<String> accounts = ["andrew", "daniel", "bob", "joe", "pam"];
-  final List<String> accUpload = [
-    'assets/images/sashimigym.png',
-    'assets/images/sashimigym.png',
-    'assets/images/sashimigym.png',
-    'assets/images/sashimigym.png',
-    'assets/images/logo.png'
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -31,15 +142,15 @@ class _FeedPageState extends State<FeedPage> {
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(
-            icon: Icon(Icons.search_outlined, color: Colors.black, size: 35),
+            icon: const Icon(Icons.search_outlined, color: Colors.black, size: 35),
             onPressed: () {
               print("search button pressed!");
             },
             splashRadius: 25,
           ),
-          Spacer(),
+          const Spacer(),
           IconButton(
-            icon: Icon(Icons.person_add_alt_1_sharp,
+            icon: const Icon(Icons.person_add_alt_1_sharp,
                 color: Colors.black, size: 35),
             onPressed: () {
               Navigator.push(
@@ -52,27 +163,60 @@ class _FeedPageState extends State<FeedPage> {
           ),
         ]),
       ),
-      body: buildFeed(context),
+      // bottomNavigationBar: NavigationBar(
+      //   onDestinationSelected: (int index) {
+      //     setState(() {
+      //       currentPageIndex = index;
+      //     });
+      //   },
+      //   indicatorColor: Colors.amber[800],
+      //   selectedIndex: currentPageIndex,
+      //   destinations: const <Widget>[
+      //     NavigationDestination(
+      //       selectedIcon: Icon(Icons.home),
+      //       icon: Icon(Icons.home),
+      //       label: 'Feed',
+      //     ),
+      //     NavigationDestination(
+      //       icon: Icon(Icons.list),
+      //       label: 'Todos',
+      //     ),
+      //     NavigationDestination(
+      //       selectedIcon: Icon(Icons.school),
+      //       icon: Icon(Icons.account_circle),
+      //       label: 'Account',
+      //     ),
+      //   ],
+      // ),
+      body: <Widget>[
+        buildFeed(context),
+        Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: const Text('Todo Page'),
+        ),
+        Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: const Text('Account Page'),
+        ),
+      ][currentPageIndex],
     );
   }
 }
 
 Widget buildFeed(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection('user').snapshots(),
+    stream: FirebaseFirestore.instance.collection('users').snapshots(),
     builder: (context, snapshot) {
-      if (snapshot.hasError) {
-        print("Error: ${snapshot.error}");
-        return Text("Something went wrong");
-      }
-
       if (!snapshot.hasData) {
-        print("Awaiting data...");
-        return LinearProgressIndicator();
+        return const LinearProgressIndicator();
       }
+      // Unwrap the nullable type
+      final documents = snapshot.data!.docs;
 
-      print("Data received: ${snapshot.data?.docs.length} documents");
-      return _buildList(context, snapshot.data?.docs ?? []);
+      print(documents.map((doc) => doc.data()));
+      return _buildList(context, documents);
     },
   );
 }
@@ -90,46 +234,47 @@ Widget buildFeed(BuildContext context) {
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
   return ListView(
-    padding: const EdgeInsets.only(top: 20.0),
+    padding: const EdgeInsets.only(top: 10.0),
     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
   );
 }
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final user = User.fromSnapshot(data);
-
   return Padding(
     key: ValueKey(user.name),
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: FeedContent(
-          acc_Name: user.name,
-          uploadImage: user.imgAddress,
-        )),
+    padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
+    child: FeedContent(
+      acc_Name: user.name,
+      uploadImage: user.imgAddress,
+    ),
   );
 }
 
 class User {
   final String name;
   final String imgAddress;
-  final DocumentReference? reference;
+  final DocumentReference reference;
+  final List<String> friends;
 
-  User.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
+  User.fromMap(Map<String, dynamic> map, {required this.reference})
+      : assert(map['first_name'] != null),
         assert(map['imgAddress'] != null),
-        name = map['name'],
-        imgAddress = map['imgAddress'];
+        assert(map['friends'] != null),
+        name = '${map['first_name']} ${map['last_name']}',
+        imgAddress = map['imgAddress'],
+        friends = List<String>.from(map['friends']);
 
   User.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data as Map<String, dynamic>? ?? {},
+      : this.fromMap(snapshot.data() as Map<String, dynamic>,
             reference: snapshot.reference);
 
   @override
   String toString() => "User<$name:$imgAddress>";
+
+  bool isFriend(DocumentReference email) {
+    return friends.contains(email);
+  }
 }
 
 class FeedContent extends StatelessWidget {
@@ -159,21 +304,20 @@ class FeedContent extends StatelessWidget {
                       children: [
                         Row(children: [
                           IconButton(
-                              icon: Icon(Icons.account_box_rounded),
+                              icon: const Icon(Icons.account_box_rounded),
                               onPressed: () {
                                 print("account button pressed!");
                               }),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Text(
                             acc_Name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18, // Change the font size as needed
                             ),
                           ),
                         ]),
-                        SizedBox(width: 115),
                         IconButton(
-                            icon: Icon(Icons.more_horiz, size: 30),
+                            icon: const Icon(Icons.more_horiz, size: 30),
                             onPressed: () {
                               print("more info button pressed!");
                             }),
@@ -190,7 +334,7 @@ class FeedContent extends StatelessWidget {
                           Container(
                             foregroundDecoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage(uploadImage),
+                                    image: NetworkImage(uploadImage),
                                     fit: BoxFit.fill),
                                 borderRadius: BorderRadius.circular(20.0)),
                           ),
@@ -200,12 +344,12 @@ class FeedContent extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
-                                    icon: Icon(Icons.favorite_border),
+                                    icon: const Icon(Icons.favorite_border),
                                     onPressed: () {
                                       print("like button pressed!");
                                     }),
                                 IconButton(
-                                    icon: Icon(Icons.emoji_emotions_outlined),
+                                    icon: const Icon(Icons.emoji_emotions_outlined),
                                     onPressed: () {
                                       print("react button pressed!");
                                     }),
