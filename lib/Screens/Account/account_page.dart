@@ -41,12 +41,10 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     const username = '@gtang';
-    const image =
-        'https://spaces.filmstories.co.uk/uploads/2020/01/danny-devito.jpg';
+    const image = 'assets/images/GracePfp.png'; // Local asset path
     const name = 'Grace';
-    const pronouns = 'pronouns';
-    const biography =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac turpis faucibus. I NEED TO FINISH SOON';
+    const pronouns = 'she/her';
+    const biography = 'CS @ CMU 2024; TJ Graduate :))))';
 
     readJson();
 

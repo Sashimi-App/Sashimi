@@ -26,7 +26,7 @@ class PostList extends StatelessWidget {
                 ),
                 child: Stack(alignment: Alignment.center, children: [
                   Ink.image(
-                    image: NetworkImage(postData[index]["image"]),
+                    image: AssetImage(postData[index]["image"]),
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.height * 0.3,
                     fit: BoxFit.cover,

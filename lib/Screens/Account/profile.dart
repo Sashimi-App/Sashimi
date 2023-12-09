@@ -86,7 +86,7 @@ Widget username(String username) {
 
 Widget profilePhoto(String imageURL) {
   return CircleAvatar(
-    backgroundImage: NetworkImage(imageURL),
+    backgroundImage: AssetImage(imageURL),
     radius: 60,
   );
 }
@@ -104,7 +104,7 @@ Widget profileName(String name) {
 
 Widget topIcons(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.all(20.0),
+    padding: const EdgeInsets.all(30.0),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
