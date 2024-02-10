@@ -1,9 +1,13 @@
-import 'package:Sashimi/Screens/Account/account_page.dart';
-import 'package:Sashimi/Screens/ToDoList/todolist_screen.dart';
-import 'package:Sashimi/Screens/feed/feed_page.dart';
+// ignore_for_file: library_private_types_in_public_api
+
+import 'package:sashimi/Screens/Account/account_page.dart';
+import 'package:sashimi/Screens/ToDoList/todolist_screen.dart';
+import 'package:sashimi/Screens/feed/feed_page.dart';
 import 'package:flutter/material.dart';
 
 class MainNavigationPage extends StatefulWidget {
+  const MainNavigationPage({super.key});
+
   @override
   _MainNavigationPageState createState() => _MainNavigationPageState();
 }
@@ -13,9 +17,9 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
   // List of Widgets to display in the body according to selected tab
   final List<Widget Function()> _widgetOptions = [
-  () => FeedPage(),
-  () => TodoListScreen(),
-  () => AccountPage(),
+  () => const FeedPage(),
+  () => const TodoListScreen(),
+  () => const AccountPage(),
 ];
 
 

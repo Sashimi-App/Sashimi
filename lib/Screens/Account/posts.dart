@@ -1,9 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'settings.dart';
 
 class PostList extends StatelessWidget {
   final List postData;
-  PostList(this.postData);
+  const PostList(this.postData, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,9 @@ class PostList extends StatelessWidget {
         children: List.generate(postData.length, (index) {
           return GestureDetector(
             onTap: () {
-              print("Post ${index} was clicked");
+              if (kDebugMode) {
+                print("Post $index was clicked");
+              }
             },
             child: Card(
                 shadowColor: Colors.black,

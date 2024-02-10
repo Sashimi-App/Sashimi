@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:Sashimi/reuseableWidgets/reusable_widget.dart';
-import 'package:Sashimi/screens/Feed/feed_page.dart';
+import 'package:sashimi/reuseableWidgets/reusable_widget.dart';
+import 'package:sashimi/screens/Feed/feed_page.dart';
 import 'package:logger/logger.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -60,6 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
 
       _logger.d("New Account Created and Logged In");
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const FeedPage()),

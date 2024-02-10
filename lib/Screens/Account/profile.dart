@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSection extends StatelessWidget {
@@ -6,8 +7,8 @@ class ProfileSection extends StatelessWidget {
   final String name;
   final String pronouns;
   final String biography;
-  ProfileSection(
-      this.userName, this.imageURL, this.name, this.pronouns, this.biography);
+  const ProfileSection(
+      this.userName, this.imageURL, this.name, this.pronouns, this.biography, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +117,9 @@ Widget topIcons(BuildContext context) {
         const Spacer(),
         GestureDetector(
           onTap: () {
-            print("Settings was clicked");
+            if (kDebugMode) {
+              print("Settings was clicked");
+            }
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const Settings()));
             // Navigator.push(
@@ -140,60 +143,57 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+    return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
         const Text(
-          "How to use Catalist",
-          textAlign: TextAlign.start,
-          style: TextStyle(fontSize: 16),
+    "How to use Catalist",
+    textAlign: TextAlign.start,
+    style: TextStyle(fontSize: 16),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: ElevatedButton.icon(
-              onPressed: null,
-              icon: const Icon(Icons.format_color_fill,
-                  color: Colors.black, size: 25.0),
-              label: const Text(
-                "Tutorial",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
-              )),
+    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+    child: ElevatedButton.icon(
+        onPressed: null,
+        icon: const Icon(Icons.format_color_fill,
+            color: Colors.black, size: 25.0),
+        label: const Text(
+          "Tutorial",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 12),
+        )),
         ),
         const Text(
-          "Customize",
-          textAlign: TextAlign.start,
-          style: TextStyle(fontSize: 16),
+    "Customize",
+    textAlign: TextAlign.start,
+    style: TextStyle(fontSize: 16),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: ElevatedButton.icon(
-              onPressed: null,
-              icon: const Icon(Icons.format_color_fill,
-                  color: Colors.black, size: 25.0),
-              label: const Text(
-                "Theme",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
-              )),
+    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+    child: ElevatedButton.icon(
+        onPressed: null,
+        icon: const Icon(Icons.format_color_fill,
+            color: Colors.black, size: 25.0),
+        label: const Text(
+          "Theme",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 12),
+        )),
         ),
         const Text(
-          "Login",
-          textAlign: TextAlign.start,
-          style: TextStyle(fontSize: 16),
+    "Login",
+    textAlign: TextAlign.start,
+    style: TextStyle(fontSize: 16),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: ElevatedButton.icon(
-              onPressed: null,
-              icon: const Icon(Icons.logout, color: Colors.black, size: 25.0),
-              label: const Text(
-                "Log Out",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
-              )),
+    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+    child: ElevatedButton.icon(
+        onPressed: null,
+        icon: const Icon(Icons.logout, color: Colors.black, size: 25.0),
+        label: const Text(
+          "Log Out",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 12),
+        )),
         ),
-      ]),
-    );
+      ]);
   }
 }

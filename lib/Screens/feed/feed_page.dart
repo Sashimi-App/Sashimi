@@ -1,6 +1,8 @@
+// ignore_for_file: iterable_contains_unrelated_type
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Sashimi/screens/Login/signin_screen.dart';
 
 class AddFriendPage extends StatelessWidget {
   const AddFriendPage({super.key});
@@ -23,7 +25,7 @@ class AddFriendPage extends StatelessWidget {
               }),
         ),
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
             child: Column(
               children: [
@@ -100,7 +102,9 @@ class AddFriendComp extends StatelessWidget {
               iconSize: 25,
               icon: const Icon(Icons.person_add_alt),
               onPressed: () {
-                print("add button pressed");
+                if (kDebugMode) {
+                  print("add button pressed");
+                }
               },
               splashRadius: 20,
             ),
@@ -108,7 +112,9 @@ class AddFriendComp extends StatelessWidget {
               iconSize: 25,
               icon: const Icon(Icons.close),
               onPressed: () {
-                print("close button pressed");
+                if (kDebugMode) {
+                  print("close button pressed");
+                }
               },
               splashRadius: 20,
             )
@@ -121,7 +127,7 @@ class AddFriendComp extends StatelessWidget {
 
 class FeedPage extends StatefulWidget {
   // final TextEditingController emailController;
-  const FeedPage({Key? key});
+  const FeedPage({super.key});
 
   @override
   State<FeedPage> createState() => _FeedPageState();
@@ -142,9 +148,12 @@ class _FeedPageState extends State<FeedPage> {
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(
-            icon: const Icon(Icons.search_outlined, color: Colors.black, size: 35),
+            icon: const Icon(Icons.search_outlined,
+                color: Colors.black, size: 35),
             onPressed: () {
-              print("search button pressed!");
+              if (kDebugMode) {
+                print("search button pressed!");
+              }
             },
             splashRadius: 25,
           ),
@@ -157,7 +166,9 @@ class _FeedPageState extends State<FeedPage> {
                 context,
                 MaterialPageRoute(builder: (context) => const AddFriendPage()),
               );
-              print("search button pressed!");
+              if (kDebugMode) {
+                print("search button pressed!");
+              }
             },
             splashRadius: 25,
           ),
@@ -215,7 +226,9 @@ Widget buildFeed(BuildContext context) {
       // Unwrap the nullable type
       final documents = snapshot.data!.docs;
 
-      print(documents.map((doc) => doc.data()));
+      if (kDebugMode) {
+        print(documents.map((doc) => doc.data()));
+      }
       return _buildList(context, documents);
     },
   );
@@ -245,7 +258,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     key: ValueKey(user.name),
     padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
     child: FeedContent(
-      acc_Name: user.name,
+      accName: user.name,
       uploadImage: user.imgAddress,
     ),
   );
@@ -279,8 +292,8 @@ class User {
 
 class FeedContent extends StatelessWidget {
   const FeedContent(
-      {super.key, required this.acc_Name, required this.uploadImage});
-  final String acc_Name;
+      {super.key, required this.accName, required this.uploadImage});
+  final String accName;
   final String uploadImage;
 
   @override
@@ -306,11 +319,13 @@ class FeedContent extends StatelessWidget {
                           IconButton(
                               icon: const Icon(Icons.account_box_rounded),
                               onPressed: () {
-                                print("account button pressed!");
+                                if (kDebugMode) {
+                                  print("account button pressed!");
+                                }
                               }),
                           const SizedBox(width: 20),
                           Text(
-                            acc_Name,
+                            accName,
                             style: const TextStyle(
                               fontSize: 18, // Change the font size as needed
                             ),
@@ -319,7 +334,9 @@ class FeedContent extends StatelessWidget {
                         IconButton(
                             icon: const Icon(Icons.more_horiz, size: 30),
                             onPressed: () {
-                              print("more info button pressed!");
+                              if (kDebugMode) {
+                                print("more info button pressed!");
+                              }
                             }),
                       ]),
                   Container(
@@ -346,12 +363,17 @@ class FeedContent extends StatelessWidget {
                                 IconButton(
                                     icon: const Icon(Icons.favorite_border),
                                     onPressed: () {
-                                      print("like button pressed!");
+                                      if (kDebugMode) {
+                                        print("like button pressed!");
+                                      }
                                     }),
                                 IconButton(
-                                    icon: const Icon(Icons.emoji_emotions_outlined),
+                                    icon: const Icon(
+                                        Icons.emoji_emotions_outlined),
                                     onPressed: () {
-                                      print("react button pressed!");
+                                      if (kDebugMode) {
+                                        print("react button pressed!");
+                                      }
                                     }),
                               ],
                             ),

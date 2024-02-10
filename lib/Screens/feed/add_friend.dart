@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AddFriendPage extends StatelessWidget {
@@ -22,7 +23,7 @@ class AddFriendPage extends StatelessWidget {
               }),
         ),
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
             child: Column(
               children: [
@@ -99,7 +100,9 @@ class AddFriendComp extends StatelessWidget {
               iconSize: 25,
               icon: const Icon(Icons.person_add_alt),
               onPressed: () {
-                print("add button pressed");
+                if (kDebugMode) {
+                  print("add button pressed");
+                }
               },
               splashRadius: 20,
             ),
@@ -107,7 +110,9 @@ class AddFriendComp extends StatelessWidget {
               iconSize: 25,
               icon: const Icon(Icons.close),
               onPressed: () {
-                print("close button pressed");
+                if (kDebugMode) {
+                  print("close button pressed");
+                }
               },
               splashRadius: 20,
             )

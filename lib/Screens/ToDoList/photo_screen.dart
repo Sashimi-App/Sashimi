@@ -1,28 +1,21 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:camera/camera.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-
 
 class PhotoPreview extends StatefulWidget {
-  const PhotoPreview({
-    super.key,
-    required this.camera
-  });
+  const PhotoPreview({super.key, required this.camera});
   final CameraDescription camera;
-
 
   @override
   State<PhotoPreview> createState() => _MyPhotoPreviewState();
-}   
+}
 
 class _MyPhotoPreviewState extends State<PhotoPreview> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  
+
   @override
   void initState() {
     super.initState();
@@ -36,7 +29,6 @@ class _MyPhotoPreviewState extends State<PhotoPreview> {
 
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
-
   }
 
   @override
@@ -45,6 +37,8 @@ class _MyPhotoPreviewState extends State<PhotoPreview> {
     _controller.dispose();
     super.dispose();
   }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // You must wait until the controller is initialized before displaying the
@@ -89,14 +83,15 @@ class _MyPhotoPreviewState extends State<PhotoPreview> {
             );
           } catch (e) {
             // If an error occurs, log the error to the console.
-            print(e);
+            if (kDebugMode) {
+              print(e);
+            }
           }
         },
         child: const Icon(Icons.camera_alt),
       ),
     );
   }
-  
 }
 
 class DisplayPictureScreen extends StatelessWidget {
@@ -114,95 +109,82 @@ class DisplayPictureScreen extends StatelessWidget {
     );
   }
 }
-class PhotoTakingScreen extends StatefulWidget {
-  const PhotoTakingScreen({
-    super.key,
-    required this.camera
-  });
-  final CameraDescription camera;
 
+class PhotoTakingScreen extends StatefulWidget {
+  const PhotoTakingScreen({super.key, required this.camera});
+  final CameraDescription camera;
 
   @override
   State<PhotoTakingScreen> createState() => _MyPhotoTakingScreenState();
-}   
-
+}
 
 class _MyPhotoTakingScreenState extends State<PhotoTakingScreen> {
-
-  
   @override
   void initState() {
     super.initState();
-
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      body: Stack(
-        children: [
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.90,
-              height: MediaQuery.of(context).size.height * 0.67,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: Colors.black,
-                  width: 2,
-                ),
-              ),
-              child: PhotoPreview(camera: widget.camera),
+        body: Stack(children: [
+      Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.90,
+          height: MediaQuery.of(context).size.height * 0.67,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: Colors.black,
+              width: 2,
             ),
           ),
-          Positioned(
-            top: 40,
-            left: 20,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back), 
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+          child: PhotoPreview(camera: widget.camera),
+        ),
+      ),
+      Positioned(
+        top: 40,
+        left: 20,
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          iconSize: 30,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      Positioned(
+        top: 40,
+        right: 20,
+        child: IconButton(
+          icon: const Icon(Icons.camera_alt),
+          iconSize: 30,
+          onPressed: () {
+            // Add camera flip functionality here
+          },
+        ),
+      ),
+      Positioned(
+        bottom: 40,
+        left: MediaQuery.of(context).size.width * 0.41,
+        child: ElevatedButton(
+          onPressed: () {
+            // Add functionality for the bottom middle button here
+          },
+          style: ElevatedButton.styleFrom(
+            shape: const CircleBorder(),
+            backgroundColor: Colors.white,
+            padding: const EdgeInsets.all(20),
+            side: const BorderSide(color: Colors.black, width: 2),
           ),
-          Positioned(
-            top: 40,
-            right: 20,
-            child: IconButton(
-              icon: Icon(Icons.camera_alt), 
-              iconSize: 30,
-              onPressed: () {
-                // Add camera flip functionality here
-              },
-            ),
-          ),
-          Positioned(
-          bottom: 40,
-          left: MediaQuery.of(context).size.width * 0.41,
-          child: ElevatedButton(
-            onPressed: () {
-              // Add functionality for the bottom middle button here
-            },
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              backgroundColor: Colors.white,
-              padding: EdgeInsets.all(20),
-              side: BorderSide(color: Colors.black, width: 2),
-            ),
-            child: Icon(
-              Icons.circle,
-              size: 40,
-              color: Colors.white,
-            ),
+          child: const Icon(
+            Icons.circle,
+            size: 40,
+            color: Colors.white,
           ),
         ),
-        ]
-      )
-    );
+      ),
+    ]));
   }
 }

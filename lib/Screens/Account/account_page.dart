@@ -1,6 +1,6 @@
 // Import necessary packages and files
 import 'profile.dart';
-import 'midNav.dart';
+import 'mid_nav.dart';
 import 'posts.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -62,7 +62,7 @@ class _AccountPageState extends State<AccountPage> {
         backgroundColor: Colors.white,
         body: Column(
           children: [
-            ProfileSection(username, image, name, pronouns, biography),
+            const ProfileSection(username, image, name, pronouns, biography),
             const MiddleNavBar(),
             PostList(_items),
           ],

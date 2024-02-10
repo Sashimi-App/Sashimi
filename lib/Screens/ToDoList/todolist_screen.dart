@@ -1,9 +1,9 @@
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:sashimi/Screens/ToDoList/photo_nocam.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:swipeable_tile/swipeable_tile.dart';
-import 'package:Sashimi/Screens/ToDoList/photo_screen.dart';
-import 'package:camera/camera.dart';
-import 'package:Sashimi/Screens/ToDoList/photo_nocam.dart';
 
 
 class TodoListScreen extends StatefulWidget {
@@ -65,7 +65,7 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
           insetPadding: const EdgeInsets.all(25),
           content: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width * 1,
               height: MediaQuery.of(context).size.height * 0.05,
               child: TextFormField(
@@ -124,7 +124,7 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
       
           proxyDecorator: (child, index, animation) => 
           Material(
-            shape:CircleBorder(eccentricity: 1),
+            shape:const CircleBorder(eccentricity: 1),
             child: child,
           ),
           // Material(
@@ -154,7 +154,7 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
                 shadow: BoxShadow(
                   color: Colors.black.withOpacity(0),
                   blurRadius: 0,
-                  offset: Offset(0, 0),
+                  offset: const Offset(0, 0),
                 ),
                 horizontalPadding: 2,
                 swipeThreshold: 0.425,
@@ -191,7 +191,7 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
                     //photo endpoint
                     Navigator.push(
                       context, 
-                      MaterialPageRoute(builder:(context) => PhotoTakingScreenNoCam(),)
+                      MaterialPageRoute(builder:(context) => const PhotoTakingScreenNoCam(),)
                     );
                     // _deleteTask(currTaskID);
                     setState(() {
