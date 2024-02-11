@@ -17,11 +17,10 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
   // List of Widgets to display in the body according to selected tab
   final List<Widget Function()> _widgetOptions = [
-  () => const FeedPage(),
-  () => const TodoListScreen(),
-  () => const AccountPage(),
-];
-
+    () => const FeedPage(),
+    () => const TodoListScreen(),
+    () => const AccountPage(),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {

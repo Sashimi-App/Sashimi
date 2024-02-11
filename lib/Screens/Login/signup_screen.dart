@@ -20,24 +20,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _showErrorMessage(String errorMessage) {
-  String customMessage;
+    String customMessage;
 
-  if (errorMessage.contains("The email address is badly formatted")) {
-    customMessage = "The email address is badly formatted. Please check your email.";
-  } else if (errorMessage.contains("weak-password")) {
-    customMessage = "The password is too weak. Please use a stronger password.";
-  } else if (errorMessage.contains("email-already-in-use")) {
-    customMessage = "The email address is already in use by another account. Please use a different email.";
-  } else {
-    customMessage = "Sign-up failed. Please try again later.";
+    if (errorMessage.contains("The email address is badly formatted")) {
+      customMessage =
+          "The email address is badly formatted. Please check your email.";
+    } else if (errorMessage.contains("weak-password")) {
+      customMessage =
+          "The password is too weak. Please use a stronger password.";
+    } else if (errorMessage.contains("email-already-in-use")) {
+      customMessage =
+          "The email address is already in use by another account. Please use a different email.";
+    } else {
+      customMessage = "Sign-up failed. Please try again later.";
+    }
+
+    final snackBar = SnackBar(
+      content: Text(customMessage),
+      duration:
+          const Duration(seconds: 5), // You can adjust the duration as needed
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
-  final snackBar = SnackBar(
-    content: Text(customMessage),
-    duration: const Duration(seconds: 5), // You can adjust the duration as needed
-  );
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}
 
   void _handleSignUpButtonPressed() async {
     _logger.d("Sign Up Button Pressed");
@@ -71,7 +75,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +85,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         title: const Text(
           "Sign Up",
-          style: TextStyle(color: Color(0xFF373737), fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Color(0xFF373737),
+              fontSize: 24,
+              fontWeight: FontWeight.bold),
         ),
       ),
       body: Container(

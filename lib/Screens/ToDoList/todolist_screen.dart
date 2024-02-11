@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:swipeable_tile/swipeable_tile.dart';
 
-
 class TodoListScreen extends StatefulWidget {
   const TodoListScreen({
     super.key,
@@ -13,8 +12,6 @@ class TodoListScreen extends StatefulWidget {
   });
 
   // final CameraDescription camera;
-
-  
 
   @override
   State<TodoListScreen> createState() => _MyTodoScreenListState();
@@ -55,7 +52,6 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
   List<Task> todoList = [];
   List<Task> completed = [];
   String taskName = '';
-  
 
   Future<String?> openDialog() => showDialog(
         barrierColor: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
@@ -116,15 +112,13 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
         height:
             MediaQuery.of(context).size.height * 0.8, // 80% of screen height
         // padding: const EdgeInsets.all(0.0),
-        padding: const EdgeInsets.only(top:20.0, bottom: 0.0),
-
+        padding: const EdgeInsets.only(top: 20.0, bottom: 0.0),
 
         child: ReorderableListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
-      
-          proxyDecorator: (child, index, animation) => 
-          Material(
-            shape:const CircleBorder(eccentricity: 1),
+
+          proxyDecorator: (child, index, animation) => Material(
+            shape: const CircleBorder(eccentricity: 1),
             child: child,
           ),
           // Material(
@@ -145,12 +139,12 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
             todoList.sort((a, b) =>
                 (a.taskCompleted ? 1 : 0).compareTo(b.taskCompleted ? 1 : 0));
             String currTaskID = todoList[index].taskID;
-            return 
-            SwipeableTile.swipeToTriggerCard(
-                color: (todoList.firstWhere((item)=>item.taskID == currTaskID).taskCompleted
-                            ? const Color.fromARGB(255, 123, 114, 114)
-                            : const Color.fromARGB(
-                                255, 0, 0, 0)),
+            return SwipeableTile.swipeToTriggerCard(
+                color: (todoList
+                        .firstWhere((item) => item.taskID == currTaskID)
+                        .taskCompleted
+                    ? const Color.fromARGB(255, 123, 114, 114)
+                    : const Color.fromARGB(255, 0, 0, 0)),
                 shadow: BoxShadow(
                   color: Colors.black.withOpacity(0),
                   blurRadius: 0,
@@ -159,29 +153,28 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
                 horizontalPadding: 2,
                 swipeThreshold: 0.425,
                 verticalPadding: 4,
-                key: Key(currTaskID), 
-                direction: SwipeDirection.horizontal ,
+                key: Key(currTaskID),
+                direction: SwipeDirection.horizontal,
                 backgroundBuilder: (context, direction, progress) {
                   if (direction == SwipeDirection.endToStart) {
-                    return 
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.red, // color of the task
-                          borderRadius:
-                              BorderRadius.circular(20.0), //how round the task is
-                        ),
-                        padding: const EdgeInsets.all(16.0),
-                      );
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red, // color of the task
+                        borderRadius:
+                            BorderRadius.circular(20.0), //how round the task is
+                      ),
+                      padding: const EdgeInsets.all(16.0),
+                    );
                   } else {
-                    return 
-                      Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 118, 105, 104), // color of the task
-                            borderRadius:
-                                BorderRadius.circular(20.0), //how round the task is
-                          ),
-                          padding: const EdgeInsets.all(16.0),
-                      );
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(
+                            255, 118, 105, 104), // color of the task
+                        borderRadius:
+                            BorderRadius.circular(20.0), //how round the task is
+                      ),
+                      padding: const EdgeInsets.all(16.0),
+                    );
                   }
                 },
                 onSwiped: (direction) {
@@ -190,33 +183,34 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
                   } else if (direction == SwipeDirection.startToEnd) {
                     //photo endpoint
                     Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder:(context) => const PhotoTakingScreenNoCam(),)
-                    );
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PhotoTakingScreenNoCam(),
+                        ));
                     // _deleteTask(currTaskID);
                     setState(() {
-                      todoList[todoList.indexWhere((item) =>item.taskID ==currTaskID)].taskCompleted = true;
+                      todoList[todoList
+                              .indexWhere((item) => item.taskID == currTaskID)]
+                          .taskCompleted = true;
                     });
                   }
                 },
-                child:
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: (todoList[index].taskCompleted
-                              ? const Color.fromARGB(255, 123, 114, 114)
-                              : const Color.fromARGB(
-                                  255, 0, 0, 0)), // color of the task
-                          borderRadius:
-                              BorderRadius.circular(20.0), //how round the task is
-                        ),
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          children: TaskBox(todoList[index].taskID),
-                        )),
-                  )
-            );
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: (todoList[index].taskCompleted
+                            ? const Color.fromARGB(255, 123, 114, 114)
+                            : const Color.fromARGB(
+                                255, 0, 0, 0)), // color of the task
+                        borderRadius:
+                            BorderRadius.circular(20.0), //how round the task is
+                      ),
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: TaskBox(todoList[index].taskID),
+                      )),
+                ));
           },
         ),
       )),
@@ -242,12 +236,13 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
   }
 
   List<Widget> TaskBox(String taskID) {
-    int tempInd = todoList.indexWhere((item) =>item.taskID == taskID);
+    int tempInd = todoList.indexWhere((item) => item.taskID == taskID);
     return [
       InkWell(
           onTap: () {
             setState(() {
-              todoList[tempInd].taskCompleted = !todoList[tempInd].taskCompleted;
+              todoList[tempInd].taskCompleted =
+                  !todoList[tempInd].taskCompleted;
             });
           },
           child: Container(
@@ -259,33 +254,30 @@ class _MyTodoScreenListState extends State<TodoListScreen> {
             ),
           )),
       Expanded(
-          child: 
-            Container(
-            padding: const EdgeInsets.only(left: 10),
-            child: 
-              TextField(
-                controller: TextEditingController.fromValue(TextEditingValue(
-                    text: todoList[tempInd].title,
-                    selection: TextSelection.collapsed(
-                        offset: todoList[tempInd].title.length))),
-                onChanged: (newTitle) {
-                  setState(() {
-                    todoList[tempInd].title = newTitle;
-                  });
-                },
-                style: TextStyle(
-                  color: Colors.white,
-                  decoration: todoList[tempInd].taskCompleted
-                      ? TextDecoration.lineThrough
-                      : null,
-                ),
-                textDirection: TextDirection.ltr,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
-              ),
-            )
-       )
+          child: Container(
+        padding: const EdgeInsets.only(left: 10),
+        child: TextField(
+          controller: TextEditingController.fromValue(TextEditingValue(
+              text: todoList[tempInd].title,
+              selection: TextSelection.collapsed(
+                  offset: todoList[tempInd].title.length))),
+          onChanged: (newTitle) {
+            setState(() {
+              todoList[tempInd].title = newTitle;
+            });
+          },
+          style: TextStyle(
+            color: Colors.white,
+            decoration: todoList[tempInd].taskCompleted
+                ? TextDecoration.lineThrough
+                : null,
+          ),
+          textDirection: TextDirection.ltr,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+          ),
+        ),
+      ))
     ];
   }
 }
