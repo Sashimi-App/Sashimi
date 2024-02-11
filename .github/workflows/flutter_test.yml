@@ -23,9 +23,8 @@ jobs:
       - name: Analyze
         run: flutter analyze .
 
-      # Uncomment this step to verify the use of 'dart format' on each commit.
       - name: Verify formatting
-        run: flutter format lib/** --set-exit-if-changed
+        run: dart format lib/** --set-exit-if-changed
 
       - name: Run tests
         run: flutter test -r expanded
